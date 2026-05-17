@@ -1,0 +1,18 @@
+#devlog
+
+Implementado hoje a página inicial do projeto, usando html e css, nada de implementação de JS ainda, já tinha feito um esboço na aula de sexta-feira, do qual tirei coisas como a fonte do projeto, começo foi começado do 0, em comparação ao feito sexta (não gostei do andar), decidi fazer denovo, comecei colocando a imagem da logo com fundo transparente, o fundo foi posto configurando pelo html e body, com width de 100% e min height de 100dvh (Boatos que é melhor para mobile), inclusive o projeto foi desenvolvido pelo método mobile-first, aonde é pensado primeiramente em mobile, para depois as demais medias, background-position center, para centralizar a imagem, background-size cover, para cobrir, só faltou um norepeat ali, mas não estava tendo problemas com repetição de imagem, background color black também para tentar resolver o bug do safari, main com width de 100% do elemento pai, html que também está com 100%, main foi disposta com o display flex, para usar as flex boxes, com o intuito de visualmente ficar uma coisa sob a outra, flex-flow column, align itens center para a logo ficar no centro, e justify contente flex-start, para começar no topo do site, e ficar respectivamente embaixo cada um dos itens, a logo foi formatada com 0px de margin top, a #logo img, foi com 180px de largura e height auto, h1 normal, section formatada inicialmente com um background White para melhor visualização, após isso foram feitos os degrades, margin tamanhos com responsividade, e padding bottom 30px (a ser estudado), sections formatações de texto normais sem preocupação, form também, após isso tem .campo, que são os campos de email e senha, formatados como display flex, para possibilitar o manuseio dos elementos com mais facilidade, e como são dispostos um abaixo do outro, column melhor opção, align itens flex-start, faz os textos ficarem na esquerda das boxes, já no input configurações básicas também, efeitos hover e focus implementados nos botões, botões formatados com 70% do tamanho da classe pai, que é a section, e de resto configurações básicas de css.
+
+
+
+#Problemas
+-----Safari com rolagem deixando "escapar" o branco do fundo, corrigido com <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+-----Responsividade do card, primeiro implementado como min-width, max-width, posteriormente corrigido para width 90% max-width 350px
+-----Dificuldades com semântica em html (pela falta de prática repetitiva)
+
+
+#Futuras melhorias
+-- Adicionar favicon
+-- Checkup
+-- Fazer parte do cadastro
+-- Fazer parte do esqueci minha senha
