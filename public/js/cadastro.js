@@ -22,7 +22,7 @@ form.addEventListener('submit', async (e) => {
 
     const nome = document.getElementById('inome').value;
     const telefone = document.getElementById('itelefone').value;
-    const username = document.getElementById('iusername').value;
+    const username = document.getElementById('iusuario').value;
     const email = document.getElementById('iemail').value;
     const genero = document.getElementById('igenero').value;
     const senha = document.getElementById('isenha').value;
