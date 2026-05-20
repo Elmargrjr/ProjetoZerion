@@ -1,0 +1,11 @@
+Foram implementadas a formatação dos campos, o campo do telefone, e do usuario, foi formatado usando a biblioteca iMask, que cria mascaras para esse tipo de formulário, juntamente foram feitas mudanças estéticas, como sombras nos campos mudanças de margin, padding e etc..., foi adicionado um link para o icone superior para voltar ao index.html, também foi implementado a transparencia do card principal, campos formatados com max lenght, require, e type email (não estava como tipo email), ainda é necessário mais uma checagem, também foi mexido nos termos, a formatação dos termos. junto com o git push que adicionará esse log, será adicionado o required nos campos de input, também a logo com o link para os arquivos de termos e privacidade. outros pontos serão descobertos nas proximas logs.
+
+
+#Problemas
+----- Integração do iMask no .js, usando o import ele não funcionava, tive que usar o script com link no cadstro.html para resolver
+
+#Futurias
+----- Estrelas de fundo estáticas (Pensar)
+----- Implementar Menu
+----- Testar login com banco de dados
+----- Hospedar e demais decisões
