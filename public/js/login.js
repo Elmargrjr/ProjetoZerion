@@ -16,10 +16,10 @@ form.addEventListener('submit', async (e) => {
         const usuario = await resposta.json();
 
         // guarda usuário logado
-        localStorage.setItem('usuario', JSON.stringify(usuario));
+        localStorage.setItem('usuario', JSON.stringify(usuario)); //RISCO DE SEGURANÇA express-session e cookie-parser
 
         window.location.href = '/home.html';
     } else {
-        alert('Email ou senha inválidos');
+        document.getElementById('mensagem-erro').textContent = 'Email ou senha inválidos';
     }
 });
