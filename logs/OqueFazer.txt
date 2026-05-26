@@ -1,1 +1,2 @@
 Favicon
+trocar type text pelo email no login

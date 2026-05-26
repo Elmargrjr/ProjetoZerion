@@ -1,0 +1,3 @@
+Foi visto que o erro de formatação de imagem, na verdade estava acontecendo, por causa do tipo em que ela se encontrava, div, uma mudança para img resolveu
+
+img com display block funciona o margin auto, padrão de img é inline block

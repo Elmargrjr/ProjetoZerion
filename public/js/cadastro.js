@@ -1,28 +1,38 @@
 const telefone = document.getElementById('itelefone');
-
 const usuario = document.getElementById('iusuario');
+const form = document.getElementById('formCadastro'); 
 
-IMask(telefone, {
-  mask: '(00) 00000-0000'
+const maskTelefone = IMask(telefone, {
+    mask: '(00) 00000-0000',
 });
 
-
-/*Mascara melhorada com IA*/
-IMask(usuario, {
-  mask: '@********************',
-  definitions: {
-    '*': /[a-zA-Z0-9_]/,
-  }
-})
-
-const form = document.getElementById('formCadastro');
+const maskUsuario = IMask(usuario, {
+    mask: '@********************',
+    definitions: {
+        '*': /[a-zA-Z0-9_]/,
+    }
+});
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    if (!maskTelefone.masked.isComplete) {
+        telefone.style.borderColor = 'red';
+        telefone.focus();
+        return;
+    } else {
+      telefone.style.borderColor = 'green';
+    }
+
+    if (maskUsuario.unmaskedValue.length < 4) {
+        usuario.style.borderColor = 'red';
+        usuario.focus();
+        return;
+    } else {
+      usuario.style.borderColor = 'green';
+    }
+
     const nome = document.getElementById('inome').value;
-    const telefone = document.getElementById('itelefone').value;
-    const username = document.getElementById('iusuario').value;
     const email = document.getElementById('iemail').value;
     const genero = document.getElementById('igenero').value;
     const senha = document.getElementById('isenha').value;
@@ -30,7 +40,14 @@ form.addEventListener('submit', async (e) => {
     const resposta = await fetch('http://localhost:3000/usuarios/cadastro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, telefone, username, email, genero, senha })
+        body: JSON.stringify({ 
+            nome, 
+            telefone: maskTelefone.unmaskedValue,
+            username: maskUsuario.value, 
+            email, 
+            genero, 
+            senha 
+        })
     });
 
     if (resposta.status === 200) {
