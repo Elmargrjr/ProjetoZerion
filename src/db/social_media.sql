@@ -14,6 +14,7 @@ CREATE TABLE usuarios (
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Tabela de posts
 CREATE TABLE posts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     conteudo TEXT,
@@ -65,6 +66,19 @@ CREATE TABLE IF NOT EXISTS comentarios (
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
+
+-- Tabela de chats
+CREATE TABLE IF NOT EXISTS chats (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    remetente_id INT NOT NULL,
+    destinatario_id INT NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lida BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (remetente_id) REFERENCES usuarios(id),
+    FOREIGN KEY (destinatario_id) REFERENCES usuarios(id)
+);
+
 
 select * from usuarios;
 select * from posts;
