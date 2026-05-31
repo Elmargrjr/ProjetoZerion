@@ -1,8 +1,3 @@
--- ================================================
--- ZERION — rede_social.sql
--- Execute este arquivo completo no MySQL
--- ================================================
-
 CREATE DATABASE IF NOT EXISTS rede_social;
 USE rede_social;
 
@@ -86,7 +81,28 @@ CREATE TABLE IF NOT EXISTS mensagens (
     FOREIGN KEY (destinatario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
--- Se o banco já existia, rode estes ALTER TABLE para adicionar colunas faltando:
--- ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS foto_perfil LONGTEXT;
--- ALTER TABLE posts ADD COLUMN IF NOT EXISTS imagem LONGTEXT;
--- ALTER TABLE posts CHANGE COLUMN data_post criado_em DATETIME DEFAULT CURRENT_TIMESTAMP;
+CREATE TABLE IF NOT EXISTS reposts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    UNIQUE KEY unico_repost (post_id, usuario_id)
+);
+
+
+select * from usuarios;
+select * from posts;
+select * from seguidores;
+select * from likes;
+select * from comentarios;
+select * from bloqueios;
+select * from mensagens;
+select * from reposts;
+
+ALTER TABLE usuarios ADD COLUMN verificado TINYINT(1) DEFAULT 0; /*Adicionar verificado*/
+
+UPDATE usuarios SET verificado = 1 WHERE username = '@junior'; /*Adicionar verificado*/
+
+
