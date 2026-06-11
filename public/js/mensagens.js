@@ -105,7 +105,9 @@ async function abrirChat(id, username, fotoPerfil) {
     destinatarioAtivo = id;
 
     // Esconde o header mobile ao entrar no chat
-    if (elHeaderMensagens) elHeaderMensagens.style.display = "none";
+    if (elHeaderMensagens && window.innerWidth < 1024) {
+    elHeaderMensagens.style.display = "none";
+    }
     elTelaChat.style.top = "0";
 
     elListaConversas.style.display = "none";
@@ -194,7 +196,9 @@ function voltarLista() {
     destinatarioAtivo = null;
 
     // Mostra o header mobile ao sair do chat
-    if (elHeaderMensagens) elHeaderMensagens.style.display = "flex";
+    if (elHeaderMensagens && window.innerWidth < 1024) {
+    elHeaderMensagens.style.display = "flex";
+    }
     elTelaChat.style.top = "55px";
 
     elTelaChat.style.display       = "none";

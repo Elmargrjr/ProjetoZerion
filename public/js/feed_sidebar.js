@@ -17,6 +17,7 @@ async function carregarSugestoesSidebar() {
 
         const sugestoes = usuarios
             .filter(u => !user || String(u.id) !== String(user.id))
+            .sort(() => Math.random() - 0.5)
             .slice(0, 5);
 
         container.innerHTML = "";

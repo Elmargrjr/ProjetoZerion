@@ -1,6 +1,5 @@
-// ================================================
-// MensagemService.js — src/js/service/
-// ================================================
+// src/js/service/MensagemService.js
+
 const MensagemRepository = require('../repository/MensagemRepository');
 
 class MensagemService {
