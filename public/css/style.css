@@ -63,7 +63,6 @@ button:active,
 
 /* ================================================
    BASE — mobile first
-   Background gradiente radial — sem imagem pesada
 ================================================ */
 
 html {
@@ -138,7 +137,6 @@ header {
     box-shadow: none;
 }
 
-/* Some no desktop — lá já tem na sidebar */
 @media (min-width: 1024px) {
     .btn-header-logout {
         display: none;
@@ -477,7 +475,7 @@ nav#navegacao a.ativo {
 }
 
 /* ================================================
-   MENU DE OPÇÕES DO POST (deletar)
+   MENU DE OPÇÕES DO POST
 ================================================ */
 
 .post-menu-wrap {
@@ -866,8 +864,16 @@ nav#navegacao a.ativo {
 
 @media (min-width: 1024px) {
 
+    /* Body e html não rolam — a rolagem fica apenas no feed */
+    html {
+        overflow: hidden;
+        height: 100vh;
+    }
+
     body {
         padding-bottom: 0;
+        overflow: hidden;
+        height: 100vh;
         display: flex;
         flex-direction: column;
     }
@@ -880,16 +886,18 @@ nav#navegacao a.ativo {
         display: none;
     }
 
+    /* Container de três colunas ocupa a tela toda e não rola */
     .layout-desktop {
         display: flex;
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
-        min-height: 100vh;
+        height: 100vh;       /* altura fixa = viewport */
+        overflow: hidden;    /* impede rolagem no container */
         gap: 0;
     }
 
-    /* ---- SIDEBAR ESQUERDA ---- */
+    /* ---- SIDEBAR ESQUERDA — estática ---- */
 
     .sidebar-esquerda {
         display: flex;
@@ -897,16 +905,11 @@ nav#navegacao a.ativo {
         width: var(--sidebar-esq);
         flex-shrink: 0;
         padding: 1.5rem 1rem 1.5rem 0;
+        height: 100vh;       /* ocupa a tela toda e não rola */
+        overflow: hidden;    /* sem scroll na sidebar esq */
+        border-right: 1px solid var(--borda);
         position: sticky;
         top: 0;
-        height: 100vh;
-        overflow-y: auto;
-        scrollbar-width: none;
-        border-right: 1px solid var(--borda);
-    }
-
-    .sidebar-esquerda::-webkit-scrollbar {
-        display: none;
     }
 
     .sidebar-logo {
@@ -1015,7 +1018,7 @@ nav#navegacao a.ativo {
         box-shadow: none !important;
     }
 
-    /* ---- FEED CENTRAL ---- */
+    /* ---- FEED CENTRAL — único elemento que rola ---- */
 
     main {
         flex: 1;
@@ -1025,7 +1028,15 @@ nav#navegacao a.ativo {
         padding: 0;
         border-right: 1px solid var(--borda);
         border-left: 1px solid var(--borda);
-        min-height: 100vh;
+        height: 100vh;       /* altura fixa = viewport */
+        overflow-y: auto;    /* rolagem só aqui */
+        overflow-x: hidden;
+        scrollbar-width: none;  /* Firefox — esconde scrollbar */
+        min-height: unset;
+    }
+
+    main::-webkit-scrollbar {
+        display: none; /* Chrome/Safari — esconde scrollbar */
     }
 
     .Criar-Post {
@@ -1042,7 +1053,7 @@ nav#navegacao a.ativo {
         margin-top: 24px;
     }
 
-    /* ---- SIDEBAR DIREITA ---- */
+    /* ---- SIDEBAR DIREITA — estática ---- */
 
     .sidebar-direita {
         display: flex;
@@ -1050,16 +1061,9 @@ nav#navegacao a.ativo {
         width: var(--sidebar-dir);
         flex-shrink: 0;
         padding: 1.5rem 0 1.5rem 1.5rem;
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        overflow-y: auto;
-        scrollbar-width: none;
+        height: 100vh;       /* ocupa a tela toda e não rola */
+        overflow: hidden;    /* sem scroll na sidebar dir */
         gap: 1rem;
-    }
-
-    .sidebar-direita::-webkit-scrollbar {
-        display: none;
     }
 
     .sidebar-direita-vazia {
@@ -1223,7 +1227,7 @@ nav#navegacao a.ativo {
     .layout-secundaria main {
         border-left: 1px solid var(--borda);
         border-right: 1px solid var(--borda);
-        min-height: 100vh;
+        min-height: unset;
     }
 
     .mensagens-header-desktop {

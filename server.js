@@ -30,6 +30,8 @@ app.post('/posts',                  (req, res) => PostController.criar(req, res)
 app.delete('/posts/:id',            (req, res) => PostController.deletar(req, res));
 app.get('/posts',                   (req, res) => PostController.listar(req, res));
 app.get('/posts/usuario/:id',       (req, res) => PostController.listarPorUsuario(req, res));
+app.get('/posts/curtidos/:id',              (req, res) => PostController.listarCurtidos(req, res));  
+app.get('/posts/comentados/:id',            (req, res) => PostController.listarComentados(req, res));
 
 // LIKES
 app.post('/likes',                  (req, res) => LikeController.curtir(req, res));

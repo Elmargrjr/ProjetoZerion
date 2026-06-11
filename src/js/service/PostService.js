@@ -21,6 +21,16 @@ class PostService {
         const [posts] = await PostRepository.buscarPorUsuario(usuario_id, viewer_id);
         return posts;
     }
+    
+    async listarCurtidosPorUsuario(usuario_id, viewer_id) {
+        const [posts] = await PostRepository.buscarCurtidosPorUsuario(usuario_id, viewer_id);
+        return posts;
+    }
+ 
+    async listarComentadosPorUsuario(usuario_id, viewer_id) {
+        const [posts] = await PostRepository.buscarComentadosPorUsuario(usuario_id, viewer_id);
+        return posts;
+    }
 }
  
 module.exports = new PostService();

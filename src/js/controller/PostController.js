@@ -47,6 +47,30 @@ class PostController {
             res.status(500).json({ msg: 'Erro ao buscar posts do usuário' });
         }
     }
+    
+    async listarCurtidos(req, res) {
+        try {
+            const { id }    = req.params;
+            const viewer_id = req.query.viewer_id || 0;
+            const posts     = await PostService.listarCurtidosPorUsuario(id, viewer_id);
+            res.json(posts);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ msg: 'Erro ao buscar posts curtidos' });
+        }
+    }
+ 
+    async listarComentados(req, res) {
+        try {
+            const { id }    = req.params;
+            const viewer_id = req.query.viewer_id || 0;
+            const posts     = await PostService.listarComentadosPorUsuario(id, viewer_id);
+            res.json(posts);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ msg: 'Erro ao buscar posts comentados' });
+        }
+    }
 }
  
 module.exports = new PostController();

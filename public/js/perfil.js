@@ -15,6 +15,7 @@ const btnMensagem = document.getElementById("btnMensagem");
 const listaPosts  = document.getElementById("lista-posts");
 
 let _perfilCardIndex = 0;
+let abaAtiva = "posts"; // controla qual aba está ativa
 
 // ================================================
 // TIMESTAMP RELATIVO
@@ -71,7 +72,6 @@ async function carregarPerfil() {
         const username = usuario.username.startsWith("@") ? usuario.username : `@${usuario.username}`;
         const badge    = badgeVerificado(usuario.verificado);
 
-        // Mostra username + badge no header do perfil
         const elUsername = document.getElementById("username-perfil");
         elUsername.innerHTML = `${username} ${badge}`;
 
@@ -123,7 +123,7 @@ async function carregarPerfil() {
             }
         }
 
-        await carregarPosts();
+        await carregarAba("posts");
 
     } catch (erro) {
         console.error("Erro ao carregar perfil:", erro);
@@ -131,20 +131,36 @@ async function carregarPerfil() {
 }
 
 // ================================================
-// TABS
+// TABS — controle central
 // ================================================
 
 document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("ativa"));
         btn.classList.add("ativa");
-        const tab = btn.dataset.tab;
-        if (tab === "posts") carregarPosts();
+        carregarAba(btn.dataset.tab);
     });
 });
 
+async function carregarAba(tab) {
+    abaAtiva = tab;
+    listaPosts.innerHTML = "";
+    _perfilCardIndex = 0;
+
+    // Mostra loading
+    listaPosts.innerHTML = `
+        <li style="width:100%;text-align:center;padding:2rem;color:var(--txt-poeira);font-size:0.8rem;">
+            <i class="fa-solid fa-circle-notch fa-spin" style="margin-bottom:0.5rem;display:block;font-size:1.5rem;color:var(--neon-ciano);opacity:0.5;"></i>
+            Carregando...
+        </li>`;
+
+    if (tab === "posts")       await carregarPosts();
+    if (tab === "comentarios") await carregarComentados();
+    if (tab === "likes")       await carregarLikes();
+}
+
 // ================================================
-// CARREGAR POSTS
+// ABA POSTS
 // ================================================
 
 async function carregarPosts() {
@@ -155,7 +171,7 @@ async function carregarPosts() {
 
         setContador("contagem-posts", posts.length);
         listaPosts.innerHTML = "";
-        _perfilCardIndex     = 0;
+        _perfilCardIndex = 0;
 
         if (posts.length === 0) {
             listaPosts.innerHTML = `
@@ -166,18 +182,87 @@ async function carregarPosts() {
             return;
         }
 
-        posts.forEach(renderizarPost);
+        posts.forEach(p => renderizarPost(p, "posts"));
 
     } catch (erro) {
         console.error("Erro ao carregar posts:", erro);
+        mostrarErroAba();
     }
 }
 
 // ================================================
-// RENDERIZAR POST
+// ABA LIKES
 // ================================================
 
-function renderizarPost(post) {
+async function carregarLikes() {
+    try {
+        const viewerId = usuarioLogado?.id || 0;
+        const res   = await fetch(`http://localhost:3000/posts/curtidos/${perfilId}?viewer_id=${viewerId}`);
+        const posts = await res.json();
+
+        listaPosts.innerHTML = "";
+        _perfilCardIndex = 0;
+
+        if (posts.length === 0) {
+            listaPosts.innerHTML = `
+                <li class="feed-vazio">
+                    <i class="fa-solid fa-heart" style="color:#fa709a;"></i>
+                    <p>${ehMeuPerfil ? "Você ainda não curtiu nenhum post." : "Nenhum post curtido ainda."}</p>
+                </li>`;
+            return;
+        }
+
+        posts.forEach(p => renderizarPost(p, "likes"));
+
+    } catch (erro) {
+        console.error("Erro ao carregar likes:", erro);
+        mostrarErroAba();
+    }
+}
+
+// ================================================
+// ABA COMENTÁRIOS
+// ================================================
+
+async function carregarComentados() {
+    try {
+        const viewerId = usuarioLogado?.id || 0;
+        const res   = await fetch(`http://localhost:3000/posts/comentados/${perfilId}?viewer_id=${viewerId}`);
+        const posts = await res.json();
+
+        listaPosts.innerHTML = "";
+        _perfilCardIndex = 0;
+
+        if (posts.length === 0) {
+            listaPosts.innerHTML = `
+                <li class="feed-vazio">
+                    <i class="fa-regular fa-comment" style="color:var(--neon-ciano);"></i>
+                    <p>${ehMeuPerfil ? "Você ainda não comentou em nenhum post." : "Nenhum comentário ainda."}</p>
+                </li>`;
+            return;
+        }
+
+        posts.forEach(p => renderizarPost(p, "comentarios"));
+
+    } catch (erro) {
+        console.error("Erro ao carregar comentários:", erro);
+        mostrarErroAba();
+    }
+}
+
+function mostrarErroAba() {
+    listaPosts.innerHTML = `
+        <li class="feed-vazio">
+            <i class="fa-solid fa-triangle-exclamation" style="color:#ff4d6d;"></i>
+            <p>Erro ao carregar. Tente novamente.</p>
+        </li>`;
+}
+
+// ================================================
+// RENDERIZAR POST (compartilhado pelas 3 abas)
+// ================================================
+
+function renderizarPost(post, origem) {
     const cardId = `perfil-card-${++_perfilCardIndex}`;
 
     const item = document.createElement("li");
@@ -199,6 +284,22 @@ function renderizarPost(post) {
            </div>`
         : "";
 
+    // Badge visual indicando a origem da aba (likes e comentários)
+    let labelOrigem = "";
+    if (origem === "likes") {
+        labelOrigem = `
+            <div class="repost-label">
+                <i class="fa-solid fa-heart" style="color:#fa709a;"></i>
+                <span style="color:var(--txt-poeira);">curtido</span>
+            </div>`;
+    } else if (origem === "comentarios") {
+        labelOrigem = `
+            <div class="repost-label">
+                <i class="fa-regular fa-comment" style="color:var(--neon-ciano);"></i>
+                <span style="color:var(--txt-poeira);">comentado</span>
+            </div>`;
+    }
+
     const ehDono = usuarioLogado && String(post.usuario_id) === String(usuarioLogado.id);
     const menuHtml = ehDono
         ? `<div class="post-menu-wrap">
@@ -219,11 +320,14 @@ function renderizarPost(post) {
     const avatarIcon = post.foto_perfil ? "" : `<i class="fa-solid fa-user-astronaut"></i>`;
 
     item.innerHTML = `
+        ${labelOrigem}
         ${labelRepost}
         ${menuHtml}
-        <div class="post-avatar" style="${avatarStyle}">${avatarIcon}</div>
+        <div class="post-avatar" data-uid="${post.usuario_id}" style="${avatarStyle}">${avatarIcon}</div>
         <div class="post-topo">
-            <h3 class="post-usuario">${username} ${badge}</h3>
+            <h3 class="post-usuario link-perfil" data-uid="${post.usuario_id}">
+                ${username} ${badge}
+            </h3>
             <span class="post-tempo" title="${new Date(post.criado_em).toLocaleString("pt-BR")}">${tempo}</span>
         </div>
         <div class="post-conteudo">${post.conteudo}</div>
@@ -274,6 +378,14 @@ function renderizarPost(post) {
         btnRepostEl.querySelector(".contagem-reposts-txt").style.color = "var(--neon-ciano)";
     }
 
+    // Link para perfil ao clicar no avatar/username (de outros usuários nos posts das abas likes/comentarios)
+    item.querySelectorAll(".post-avatar[data-uid], .link-perfil[data-uid]").forEach(el => {
+        el.style.cursor = "pointer";
+        el.addEventListener("click", () => {
+            window.location.href = `perfil.html?id=${el.dataset.uid}`;
+        });
+    });
+
     listaPosts.appendChild(item);
 
     item.querySelector(".btn-like").addEventListener("click",     toggleLike);
@@ -322,8 +434,11 @@ async function deletarPost(post_id, itemEl) {
             itemEl.style.transform  = "scale(0.97)";
             setTimeout(() => {
                 itemEl.remove();
-                const total = listaPosts.querySelectorAll(".post").length;
-                setContador("contagem-posts", total);
+                // Atualiza contador de posts somente na aba de posts
+                if (abaAtiva === "posts") {
+                    const total = listaPosts.querySelectorAll(".post").length;
+                    setContador("contagem-posts", total);
+                }
             }, 300);
         }
     } catch (erro) { console.error("Erro ao deletar:", erro); }
