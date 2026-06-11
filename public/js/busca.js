@@ -1,5 +1,5 @@
 // ================================================
-// ZERION — busca.js
+// ZERION — busca.js — FIX #4 sugestões aleatórias
 // ================================================
 
 const usuarioLogado   = JSON.parse(localStorage.getItem("usuario"));
@@ -50,20 +50,25 @@ inputBusca.addEventListener("input", async () => {
 });
 
 // ================================================
-// RENDERIZAR USUÁRIO — sem botão seguir, clique vai para perfil
+// RENDERIZAR USUÁRIO
 // ================================================
 
 function renderizarUsuario(u, container) {
     const nomeExibido = u.username.startsWith("@") ? u.username : `@${u.username}`;
+    const badge       = u.verificado
+        ? `<i class="fa-solid fa-circle-check badge-verificado" title="Verificado"></i>`
+        : "";
 
     const item = document.createElement("li");
     item.classList.add("usuario-item");
     item.style.cursor = "pointer";
     item.innerHTML = `
-        <div class="usuario-avatar" style="${u.foto_perfil ? `background-image:url(${u.foto_perfil});background-size:cover;background-position:center;` : ''}"></div>
+        <div class="usuario-avatar" style="${u.foto_perfil ? `background-image:url(${u.foto_perfil});background-size:cover;background-position:center;` : ''}">
+            ${u.foto_perfil ? "" : '<i class="fa-solid fa-user-astronaut"></i>'}
+        </div>
         <div class="usuario-info">
-            <span class="usuario-nome">${nomeExibido}</span>
-            <span class="usuario-sub">${u.nome}</span>
+            <span class="usuario-nome">${nomeExibido} ${badge}</span>
+            <span class="usuario-sub">${u.nome || ""}</span>
         </div>
         <i class="fa-solid fa-chevron-right" style="color:var(--txt-poeira);font-size:0.75rem;flex-shrink:0;"></i>
     `;
@@ -89,13 +94,19 @@ function limparBusca() {
 btnLimpar.addEventListener("click", limparBusca);
 
 // ================================================
-// SUGESTÕES DO BANCO
+// FIX #4 — SUGESTÕES ALEATÓRIAS a cada carregamento
 // ================================================
 
 async function carregarSugestoes() {
     try {
         const resposta = await fetch("http://localhost:3000/usuarios/buscar?termo=");
-        const usuarios = await resposta.json();
+        const todos    = await resposta.json();
+
+        // Filtra o próprio usuário e embaralha
+        const filtrados = todos
+            .filter(u => !usuarioLogado || String(u.id) !== String(usuarioLogado.id))
+            .sort(() => Math.random() - 0.5) // embaralha aleatoriamente
+            .slice(0, 8); // mostra 8
 
         let lista = secaoSugestoes.querySelector(".lista-usuarios");
         if (!lista) {
@@ -105,10 +116,7 @@ async function carregarSugestoes() {
         }
         lista.innerHTML = "";
 
-        usuarios
-            .filter(u => !usuarioLogado || String(u.id) !== String(usuarioLogado.id))
-            .slice(0, 6)
-            .forEach(u => renderizarUsuario(u, lista));
+        filtrados.forEach(u => renderizarUsuario(u, lista));
 
     } catch (erro) {
         console.error("Erro ao carregar sugestões:", erro);

@@ -7,6 +7,11 @@ class ComentarioService {
         return await ComentarioRepository.salvar(post_id, usuario_id, conteudo);
     }
 
+    async listarPorUsuario(usuario_id, viewer_id) {
+    const [posts] = await ComentarioRepository.buscarPostsComentadosPorUsuario(usuario_id, viewer_id);
+    return posts;
+}
+
     async listar(post_id) {
         const [comentarios] = await ComentarioRepository.buscarPorPost(post_id);
         return comentarios;

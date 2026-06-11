@@ -21,6 +21,18 @@ class ComentarioController {
         }
     }
 
+    async listarPorUsuario(req, res) {
+    try {
+        const { id }    = req.params;
+        const viewer_id = req.query.viewer_id || 0;
+        const posts     = await ComentarioService.listarPorUsuario(id, viewer_id);
+        res.json(posts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Erro ao listar comentários do usuário' });
+    }
+}
+
     async listar(req, res) {
         try {
             const { post_id } = req.params;

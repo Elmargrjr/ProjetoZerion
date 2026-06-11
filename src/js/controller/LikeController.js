@@ -20,6 +20,18 @@ class LikeController {
         }
     }
 
+    async listarPorUsuario(req, res) {
+    try {
+        const { id }      = req.params;
+        const viewer_id   = req.query.viewer_id || 0;
+        const posts       = await LikeServiceInstance.listarPorUsuario(id, viewer_id);
+        res.json(posts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Erro ao listar curtidas' });
+    }
+}
+
     async descurtir(req, res) {
         try {
             const { post_id, usuario_id } = req.body;

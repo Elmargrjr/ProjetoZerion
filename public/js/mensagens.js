@@ -5,31 +5,30 @@
 const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
 let destinatarioAtivo = null;
 
-// Elementos — acessados após DOMContentLoaded
 let elListaConversas, elTelaChat, elChatMensagens,
-    elInputMensagem, elBtnEnviar, elBtnVoltar, elChatNome, elChatAvatar;
+    elInputMensagem, elBtnEnviar, elBtnVoltar, elChatNome, elChatAvatar,
+    elHeaderMensagens;
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    elListaConversas = document.getElementById("lista-conversas");
-    elTelaChat       = document.getElementById("tela-chat");
-    elChatMensagens  = document.getElementById("chat-mensagens");
-    elInputMensagem  = document.getElementById("input-mensagem");
-    elBtnEnviar      = document.getElementById("btn-enviar");
-    elBtnVoltar      = document.getElementById("btn-voltar");
-    elChatNome       = document.getElementById("chat-nome-usuario");
-    elChatAvatar     = document.getElementById("chat-avatar");
+    elListaConversas  = document.getElementById("lista-conversas");
+    elTelaChat        = document.getElementById("tela-chat");
+    elChatMensagens   = document.getElementById("chat-mensagens");
+    elInputMensagem   = document.getElementById("input-mensagem");
+    elBtnEnviar       = document.getElementById("btn-enviar");
+    elBtnVoltar       = document.getElementById("btn-voltar");
+    elChatNome        = document.getElementById("chat-nome-usuario");
+    elChatAvatar      = document.getElementById("chat-avatar");
+    elHeaderMensagens = document.getElementById("header-mensagens");
 
-    // Listeners
     elBtnEnviar.addEventListener("click", enviarMensagem);
     elBtnVoltar.addEventListener("click", voltarLista);
     elInputMensagem.addEventListener("keydown", (e) => {
         if (e.key === "Enter") enviarMensagem();
     });
 
-    // Verifica se veio do perfil com ?id=
-    const params    = new URLSearchParams(window.location.search);
-    const idDireto  = params.get("id");
+    const params   = new URLSearchParams(window.location.search);
+    const idDireto = params.get("id");
 
     if (idDireto) {
         abrirChatPorId(idDireto);
@@ -39,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ================================================
-// ABRIR CHAT DIRETO POR ID (vindo do perfil)
+// ABRIR CHAT DIRETO POR ID
 // ================================================
 
 async function abrirChatPorId(id) {
@@ -99,11 +98,15 @@ async function carregarConversas() {
 }
 
 // ================================================
-// ABRIR CHAT
+// ABRIR CHAT — esconde o header "Mensagens"
 // ================================================
 
 async function abrirChat(id, username, fotoPerfil) {
     destinatarioAtivo = id;
+
+    // Esconde o header mobile ao entrar no chat
+    if (elHeaderMensagens) elHeaderMensagens.style.display = "none";
+    elTelaChat.style.top = "0";
 
     elListaConversas.style.display = "none";
     elTelaChat.style.display       = "flex";
@@ -184,11 +187,16 @@ function adicionarMensagemNaTela(texto, tipo) {
 }
 
 // ================================================
-// VOLTAR
+// VOLTAR — mostra o header "Mensagens" de volta
 // ================================================
 
 function voltarLista() {
-    destinatarioAtivo              = null;
+    destinatarioAtivo = null;
+
+    // Mostra o header mobile ao sair do chat
+    if (elHeaderMensagens) elHeaderMensagens.style.display = "flex";
+    elTelaChat.style.top = "55px";
+
     elTelaChat.style.display       = "none";
     elListaConversas.style.display = "block";
     history.replaceState(null, "", "mensagens.html");

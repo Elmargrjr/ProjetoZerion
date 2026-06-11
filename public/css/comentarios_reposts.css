@@ -1,10 +1,3 @@
-/* ================================================
-   ZERION — comentarios_reposts.css
-   Adicione este bloco ao final do style.css
-   E também ao final do perfil.css
-================================================ */
-
-/* --- Label de repost --- */
 .repost-label {
     display: flex;
     align-items: center;
@@ -20,7 +13,6 @@
     color: var(--neon-ciano);
 }
 
-/* --- Stats (contadores abaixo do post) --- */
 .post-stats {
     display: flex;
     gap: 1.2rem;
@@ -41,18 +33,15 @@
     font-size: 0.8rem;
 }
 
-/* --- Botão de repost ativo --- */
 .btn-repost.repostado i { color: var(--neon-ciano); }
 .btn-comentar.comentario-ativo i { color: var(--neon-ciano); }
 
-/* --- Seção de comentários --- */
 .secao-comentarios {
     margin-top: 12px;
     padding-top: 12px;
     border-top: 1px dashed rgba(255,255,255,0.08);
 }
 
-/* --- Input de comentário --- */
 .comentario-input-area {
     display: flex;
     align-items: center;
@@ -111,7 +100,6 @@
     transform: translateY(-1px);
 }
 
-/* --- Lista de comentários --- */
 .lista-comentarios {
     list-style: none;
     display: flex;

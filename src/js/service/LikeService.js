@@ -9,6 +9,11 @@ class LikeService {
         return await LikeRepository.curtir(post_id, usuario_id);
     }
 
+    async listarPorUsuario(usuario_id, viewer_id) {
+    const [posts] = await LikeRepository.buscarPostsCurtidosPorUsuario(usuario_id, viewer_id);
+    return posts;
+}
+
     async descurtir(post_id, usuario_id) {
         return await LikeRepository.descurtir(post_id, usuario_id);
     }

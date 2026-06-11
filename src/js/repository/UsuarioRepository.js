@@ -20,9 +20,9 @@ class UsuarioRepository {
 }
 
     buscarPorId(id) {
-        const sql = 'SELECT id, nome, username, foto_perfil, criado_em FROM usuarios WHERE id = ?';
-        return db.promise().query(sql, [id]);
-    }
+    const sql = 'SELECT id, nome, username, foto_perfil, criado_em, verificado, is_ia FROM usuarios WHERE id = ?';
+    return db.promise().query(sql, [id]);
+}
 
     atualizarFoto(id, foto) {
         const sql = 'UPDATE usuarios SET foto_perfil = ? WHERE id = ?';

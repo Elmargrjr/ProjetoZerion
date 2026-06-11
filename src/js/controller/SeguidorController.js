@@ -18,6 +18,28 @@ class SeguidorController {
         }
     }
 
+    async listarSeguidores(req, res) {
+    try {
+        const { id }      = req.params;
+        const seguidores  = await SeguidorServiceInstance.listarSeguidores(id);
+        res.json(seguidores);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Erro ao listar seguidores' });
+    }
+}
+ 
+async listarSeguindo(req, res) {
+    try {
+        const { id }    = req.params;
+        const seguindo  = await SeguidorServiceInstance.listarSeguindo(id);
+        res.json(seguindo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Erro ao listar seguindo' });
+    }
+}
+
     async desseguir(req, res) {
         try {
             const { seguidor_id, seguindo_id } = req.body;

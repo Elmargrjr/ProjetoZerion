@@ -10,6 +10,28 @@ class SeguidorRepository {
         return db.promise().query(sql, [seguidor_id, seguindo_id]);
     }
 
+    listarSeguidores(usuario_id) {
+    const sql = `
+        SELECT u.id, u.nome, u.username, u.foto_perfil, u.verificado
+        FROM seguidores s
+        JOIN usuarios u ON s.seguidor_id = u.id
+        WHERE s.seguindo_id = ?
+        ORDER BY s.criado_em DESC
+    `;
+    return db.promise().query(sql, [usuario_id]);
+}
+ 
+listarSeguindo(usuario_id) {
+    const sql = `
+        SELECT u.id, u.nome, u.username, u.foto_perfil, u.verificado
+        FROM seguidores s
+        JOIN usuarios u ON s.seguindo_id = u.id
+        WHERE s.seguidor_id = ?
+        ORDER BY s.criado_em DESC
+    `;
+    return db.promise().query(sql, [usuario_id]);
+}
+
     desseguir(seguidor_id, seguindo_id) {
         const sql = 'DELETE FROM seguidores WHERE seguidor_id = ? AND seguindo_id = ?';
         return db.promise().query(sql, [seguidor_id, seguindo_id]);
