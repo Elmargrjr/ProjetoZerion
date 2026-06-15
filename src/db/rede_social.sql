@@ -36,6 +36,10 @@ CREATE TABLE IF NOT EXISTS seguidores (
     UNIQUE KEY unico_seguir (seguidor_id, seguindo_id)
 );
 
+UPDATE usuarios
+SET foto_perfil = 'https://imgur.com/gallery/damon-salvatore-1CkAu#D0BDusW'
+WHERE id = 1;
+
 -- Likes
 CREATE TABLE IF NOT EXISTS likes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -92,18 +96,18 @@ CREATE TABLE IF NOT EXISTS reposts (
 );
 
 CREATE TABLE IF NOT EXISTS notificacoes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,     
-    ator_id INT NOT NULL,        
-    tipo VARCHAR(50) NOT NULL,    
-    post_id INT NULL,             
-    lida BOOLEAN DEFAULT FALSE,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    ator_id    INT NOT NULL,
+    tipo       ENUM('like', 'repost', 'seguidor', 'comentario') NOT NULL,
+    post_id    INT DEFAULT NULL,
+    lida       TINYINT(1) DEFAULT 0,
+    criado_em  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (ator_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+    FOREIGN KEY (ator_id)    REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id)    REFERENCES posts(id)    ON DELETE CASCADE
 );
-    
+
 
 select * from usuarios;
 select * from posts;
@@ -115,8 +119,11 @@ select * from mensagens;
 select * from reposts;
 select * from notificacoes;
 
-ALTER TABLE usuarios ADD COLUMN verificado TINYINT(1) DEFAULT 0; /*Adicionar verificado*/
+ALTER TABLE usuarios ADD COLUMN verificado TINYINT(1) DEFAULT 0;
 
-UPDATE usuarios SET verificado = 1 WHERE username = '@junior'; /*Adicionar verificado*/
+UPDATE usuarios SET verificado = 1 WHERE username = '@junior';
+
+ALTER TABLE usuarios ADD COLUMN is_ia TINYINT(1) DEFAULT 0;
+
 
 
