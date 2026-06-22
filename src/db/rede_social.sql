@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     senha VARCHAR(255) NOT NULL,
     is_admin BOOLEAN DEFAULT FALSE,
     foto_perfil LONGTEXT,
+    verificado TINYINT(1),
+    is_ia TINYINT(1),
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -118,12 +120,6 @@ select * from bloqueios;
 select * from mensagens;
 select * from reposts;
 select * from notificacoes;
-
-ALTER TABLE usuarios ADD COLUMN verificado TINYINT(1) DEFAULT 0;
-
-UPDATE usuarios SET verificado = 1 WHERE username = '@junior';
-
-ALTER TABLE usuarios ADD COLUMN is_ia TINYINT(1) DEFAULT 0;
 
 
 
