@@ -87,7 +87,6 @@
             opacity: 0.85;
         }
 
-        /*Isso aqui resolve a rolagem vertical do safari*/
         .galaxy {
             position: fixed;
             inset: 0;
@@ -151,15 +150,11 @@
             <div class="conteudo">
 
                 <div class="bloco">
-                    <div class="titulo">Última atualização</div>
-                    <div class="texto">17/05/2026</div>
-                </div>
-
-                <div class="bloco">
                     <div class="titulo">1. Coleta de dados</div>
                     <div class="texto">
-                        A Zerion pode coletar dados fornecidos voluntariamente pelo usuário,
-                        como nome, e-mail e informações inseridas durante o cadastro.
+                        A Zerion coleta dados fornecidos voluntariamente pelo usuário durante o cadastro,
+                        como nome, e-mail, nome de usuário e telefone. Fotos de perfil enviadas pelo usuário
+                        também são armazenadas localmente no banco de dados da aplicação.
                     </div>
                 </div>
 
@@ -167,37 +162,58 @@
                     <div class="titulo">2. Finalidade do uso</div>
                     <div class="texto">
                         Os dados coletados são utilizados exclusivamente para simulação de funcionalidades
-                        dentro do ambiente acadêmico do sistema.
+                        dentro do ambiente acadêmico, permitindo autenticação, exibição de perfil
+                        e interação entre usuários na plataforma.
                     </div>
                 </div>
 
                 <div class="bloco">
-                    <div class="titulo">3. Armazenamento</div>
+                    <div class="titulo">3. Inteligência Artificial e API externa</div>
                     <div class="texto">
-                        Por se tratar de um projeto acadêmico, não há garantia de armazenamento permanente,
-                        podendo os dados ser resetados ou removidos a qualquer momento.
+                        A Zerion utiliza a API da Anthropic para gerar conteúdo automatizado pelos personagens de IA.
+                        Ao interagir com esses personagens ou ao ter seu conteúdo comentado por eles,
+                        partes do texto de suas publicações podem ser enviadas à API da Anthropic
+                        para geração de respostas contextuais.<br><br>
+
+                        • Nenhum dado de identificação pessoal é enviado à API — apenas o conteúdo textual das publicações<br>
+                        • A Anthropic possui política própria de privacidade disponível em anthropic.com/privacy<br>
+                        • Dados enviados via API não são utilizados para treinar modelos, conforme política da Anthropic
                     </div>
                 </div>
 
                 <div class="bloco">
-                    <div class="titulo">4. Compartilhamento</div>
+                    <div class="titulo">4. Armazenamento</div>
                     <div class="texto">
-                        Nenhuma informação é compartilhada com terceiros ou serviços externos,
-                        uma vez que o sistema não possui integração com plataformas reais.
+                        Por se tratar de um projeto acadêmico hospedado em ambiente de demonstração,
+                        não há garantia de armazenamento permanente. Os dados podem ser resetados
+                        ou removidos ao término da apresentação do projeto.
                     </div>
                 </div>
 
                 <div class="bloco">
-                    <div class="titulo">5. Segurança</div>
+                    <div class="titulo">5. Compartilhamento</div>
                     <div class="texto">
-                        Não há garantia de segurança absoluta dos dados, dado o caráter experimental e educacional do projeto.
+                        Nenhuma informação pessoal identificável é compartilhada com terceiros,
+                        exceto o conteúdo textual de publicações enviado à API da Anthropic
+                        para fins de geração de respostas dos personagens, conforme descrito na seção 3.
                     </div>
                 </div>
 
                 <div class="bloco">
-                    <div class="titulo">6. Observação final</div>
+                    <div class="titulo">6. Segurança</div>
                     <div class="texto">
-                        Este sistema é uma simulação acadêmica sem caráter comercial ou operacional real.
+                        As senhas dos usuários são armazenadas com criptografia bcrypt.
+                        Demais dados são armazenados em banco de dados local sem garantia de segurança absoluta,
+                        dado o caráter experimental e educacional do projeto.
+                    </div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">7. Observação final</div>
+                    <div class="texto">
+                        Esta plataforma é uma simulação acadêmica sem caráter comercial ou operacional real.
+                        Ao utilizar a Zerion, o usuário declara ciência de sua natureza experimental
+                        e da presença de personagens fictícios operados por Inteligência Artificial.
                     </div>
                 </div>
 

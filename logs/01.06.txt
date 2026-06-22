@@ -1,0 +1,10 @@
+#Updates e melhorias a verificar.
+
+Variável para contar a quantidade de likes e reposts.
+Notificação não está chegando.
+Bug nos likes e reposts das postagens (não está realizando a contagem direito e as vezes buga visualmente).
+Adicionar para ir ao perfil do usuário se ele clicar na foto quando está postando.
+Colocar para os reposts não aparecerem no feed principal.
+Tirar a caixa de links do perfil(Talvez).
+Fazer as abas do perfil (Posts, Comentários e Likes) funcionarem.
+

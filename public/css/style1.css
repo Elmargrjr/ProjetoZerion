@@ -82,7 +82,7 @@ main{
 #logo:hover img {
   filter: drop-shadow(0 0 15px rgb(255, 255, 255));
   cursor: pointer;
-}
+}   
 
 main > h1 {
     color: white;
@@ -92,10 +92,8 @@ main > h1 {
 section {
     text-align: center;
     margin-top: 70px;
-    margin-bottom: 70px;
 
-    display: flex;
-    flex-flow: column wrap;
+    display: block;
 
     width: 90%;
     max-width: 350px;
@@ -141,7 +139,6 @@ form {
     padding: 7px;
 
     text-shadow: 3px 2px 6px rgba(0, 0, 0, 0.593);
-    
 }
 
 .campo input {
@@ -224,38 +221,13 @@ div.campo > a {
     color: rgba(0,0,0,0.5);
 }
 
-
-
-.campo > select {
-    width: 100%;
-
-    padding: 8px;
-
-    border-radius: 8px;
-
-    border: 1px solid rgba(255, 255, 255, 0.595);
-
-    background-color: rgba(255, 255, 255, 0.707);
-
-    color: rgba(0,0,0,0.5);
-
-    outline: none;
-
-    transition: 0.3s;
-
-    box-shadow: 7px 5px 27px 0px black;
-}
-
-.termos {
-    padding-top: 20px;
-    margin: 70px;
-    text-align: justify;
-    margin-top: 10px;
-    font-size: 15px;
-}
-
-.termos > label >  a {
-    color: white;
+.forgot {
     text-decoration: underline;
-    white-space: nowrap;
+    
 }
+
+.forgot:hover {
+    transform: translateY(-1px);
+    transition: 0.2s;
+}
+
