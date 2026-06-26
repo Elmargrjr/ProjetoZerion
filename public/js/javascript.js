@@ -28,6 +28,7 @@ if (avatarCriar) {
 // ================================================
 // TIMESTAMP RELATIVO
 // ================================================
+// Função para tempo relativo
 
 function tempoRelativo(dataStr) {
     const agora = new Date();
@@ -46,6 +47,7 @@ function tempoRelativo(dataStr) {
 // ================================================
 // BADGE VERIFICADO
 // ================================================
+// Função para badge verificado
 
 function badgeVerificado(verificado) {
     if (!verificado) return "";
@@ -140,6 +142,7 @@ async function carregarPosts() {
 // ================================================
 
 let _postCardIndex = 0;
+// Função para renderizar post
 
 function renderizarPost(post) {
     const cardId = `card-${++_postCardIndex}`;
@@ -311,7 +314,7 @@ async function toggleLike(e) {
     if (!usuarioLogado) return;
     const btn      = e.currentTarget;
     const post_id  = btn.dataset.id;
-    const icon     = btn.querySelector("i");
+    const icon     = btn.querySelector("i, svg");
     const span     = btn.querySelector(".contagem-likes-txt");
     const jaCurtiu = btn.classList.contains("curtido");
 
@@ -321,21 +324,34 @@ async function toggleLike(e) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ post_id, usuario_id: usuarioLogado.id })
         });
+
+        if (!resposta.ok) {
+            throw new Error('Falha ao atualizar like');
+        }
+
         const { total } = await resposta.json();
         if (span) span.textContent = total;
 
         if (jaCurtiu) {
             btn.classList.remove("curtido");
-            icon.className   = "fa-regular fa-heart";
-            icon.style.color = "";
-            if (span) span.style.color = "";
+            if (icon) {
+                icon.className = "fa-regular fa-heart";
+                icon.style.setProperty("color", "", "important");
+                icon.style.setProperty("fill", "", "important");
+            }
+            if (span) span.style.setProperty("color", "", "important");
         } else {
             btn.classList.add("curtido");
-            icon.className   = "fa-solid fa-heart";
-            icon.style.color = "#fa709a";
-            if (span) span.style.color = "#fa709a";
+            if (icon) {
+                icon.className = "fa-solid fa-heart";
+                icon.style.setProperty("color", "#fa709a", "important");
+                icon.style.setProperty("fill", "#fa709a", "important");
+            }
+            if (span) span.style.setProperty("color", "#fa709a", "important");
         }
-    } catch (erro) { console.error("Erro ao curtir:", erro); }
+    } catch (erro) {
+        console.error("Erro ao curtir:", erro);
+    }
 }
 
 // ================================================
@@ -446,7 +462,7 @@ async function toggleRepost(e) {
     if (!usuarioLogado) return;
     const btn        = e.currentTarget;
     const post_id    = btn.dataset.id;
-    const icon       = btn.querySelector("i");
+    const icon       = btn.querySelector("i, svg");
     const span       = btn.querySelector(".contagem-reposts-txt");
     const jaRepostou = btn.classList.contains("repostado");
 
@@ -456,19 +472,38 @@ async function toggleRepost(e) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ post_id, usuario_id: usuarioLogado.id })
         });
+
+        if (!resposta.ok) {
+            throw new Error('Falha ao atualizar repost');
+        }
+
         const { total } = await resposta.json();
         if (span) span.textContent = total;
 
         if (jaRepostou) {
             btn.classList.remove("repostado");
-            icon.style.color = "";
-            if (span) span.style.color = "";
+            if (icon) {
+                if (icon.tagName.toLowerCase() === "i") {
+                    icon.className = "fa-solid fa-retweet";
+                }
+                icon.style.setProperty("color", "", "important");
+                icon.style.setProperty("fill", "", "important");
+            }
+            if (span) span.style.setProperty("color", "", "important");
         } else {
             btn.classList.add("repostado");
-            icon.style.color = "var(--neon-ciano)";
-            if (span) span.style.color = "var(--neon-ciano)";
+            if (icon) {
+                if (icon.tagName.toLowerCase() === "i") {
+                    icon.className = "fa-solid fa-retweet";
+                }
+                icon.style.setProperty("color", "var(--neon-ciano)", "important");
+                icon.style.setProperty("fill", "var(--neon-ciano)", "important");
+            }
+            if (span) span.style.setProperty("color", "var(--neon-ciano)", "important");
         }
-    } catch (erro) { console.error("Erro ao repostar:", erro); }
+    } catch (erro) {
+        console.error("Erro ao repostar:", erro);
+    }
 }
 
 // ================================================

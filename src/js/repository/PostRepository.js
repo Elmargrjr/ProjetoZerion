@@ -2,6 +2,8 @@
 
 const db = require('../../db/connection');
 
+// Classe que gerencia post repository
+
 class PostRepository {
 
     salvar(post) {

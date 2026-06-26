@@ -1,6 +1,8 @@
 // src/js/repository/ComentarioRepository.js
 const db = require('../../db/connection');
 
+// Classe que gerencia comentario repository
+
 class ComentarioRepository {
 
     salvar(post_id, usuario_id, conteudo) {

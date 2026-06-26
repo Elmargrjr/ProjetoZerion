@@ -1,6 +1,15 @@
+// ================================================
+// ZERION — UsuarioController.js
+// Controller para rotas de usuario.
+// ================================================
+
 const UsuarioService = require('../service/UsuarioService');
 
+// Classe que gerencia usuario controller
+
 class UsuarioController {
+
+    // Executa a ação de cadastrar
 
     async cadastrar(req, res) {
         try {
@@ -12,6 +21,8 @@ class UsuarioController {
             res.status(500).json({ msg: 'Erro ao cadastrar' });
         }
     }
+
+    // Executa a ação de login
 
     async login(req, res) {
         try {
@@ -25,6 +36,8 @@ class UsuarioController {
         }
     }
 
+    // Executa a ação de buscar
+
     async buscar(req, res) {
         try {
             const { termo } = req.query;
@@ -35,6 +48,8 @@ class UsuarioController {
             res.status(500).json({ msg: 'Erro na busca' });
         }
     }
+
+    // Executa a ação de buscar por id
 
     async buscarPorId(req, res) {
         try {
@@ -47,6 +62,8 @@ class UsuarioController {
             res.status(500).json({ msg: 'Erro ao buscar usuário' });
         }
     }
+
+    // Executa a ação de atualizar foto
 
     async atualizarFoto(req, res) {
         try {

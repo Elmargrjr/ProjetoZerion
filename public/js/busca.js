@@ -52,6 +52,7 @@ inputBusca.addEventListener("input", async () => {
 // ================================================
 // RENDERIZAR USUÁRIO — sem botão seguir, clique vai para perfil
 // ================================================
+// Função para renderizar usuario
 
 function renderizarUsuario(u, container) {
     const nomeExibido = u.username.startsWith("@") ? u.username : `@${u.username}`;
@@ -78,6 +79,7 @@ function renderizarUsuario(u, container) {
 // ================================================
 // LIMPAR BUSCA
 // ================================================
+// Função para limpar busca
 
 function limparBusca() {
     inputBusca.value              = "";

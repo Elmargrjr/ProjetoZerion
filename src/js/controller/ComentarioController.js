@@ -1,7 +1,16 @@
+// ================================================
+// ZERION — ComentarioController.js
+// Controller para rotas de comentario.
+// ================================================
+
 const ComentarioService  = require('../service/ComentarioService');
 const NotificacaoServiceC = require('../service/NotificacaoService');
 
+// Classe que gerencia comentario controller
+
 class ComentarioController {
+
+    // Executa a ação de comentar
 
     async comentar(req, res) {
         try {
@@ -20,6 +29,22 @@ class ComentarioController {
             res.status(500).json({ msg: 'Erro ao comentar' });
         }
     }
+
+    // Executa a ação de listar por usuario
+
+    async listarPorUsuario(req, res) {
+    try {
+        const { id }    = req.params;
+        const viewer_id = req.query.viewer_id || 0;
+        const posts     = await ComentarioService.listarPorUsuario(id, viewer_id);
+        res.json(posts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Erro ao listar comentários do usuário' });
+    }
+}
+
+    // Executa a ação de listar
 
     async listar(req, res) {
         try {

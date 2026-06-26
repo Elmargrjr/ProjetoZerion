@@ -3,6 +3,8 @@
 // ================================================
 const db = require('../../db/connection');
 
+// Classe que gerencia seguidor repository
+
 class SeguidorRepository {
 
     seguir(seguidor_id, seguindo_id) {

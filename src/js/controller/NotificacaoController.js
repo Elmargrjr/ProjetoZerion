@@ -4,7 +4,11 @@
 
 const NotificacaoServiceInstance = require('../service/NotificacaoService');
 
+// Classe que gerencia notificacao controller
+
 class NotificacaoController {
+
+    // Executa a ação de listar
 
     async listar(req, res) {
         try {
@@ -17,6 +21,8 @@ class NotificacaoController {
         }
     }
 
+    // Executa a ação de contar nao lidas
+
     async contarNaoLidas(req, res) {
         try {
             const { usuario_id } = req.params;
@@ -27,6 +33,8 @@ class NotificacaoController {
             res.status(500).json({ msg: 'Erro ao contar notificações' });
         }
     }
+
+    // Executa a ação de marcar lidas
 
     async marcarLidas(req, res) {
         try {

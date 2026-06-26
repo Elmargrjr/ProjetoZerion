@@ -1,7 +1,16 @@
+// ================================================
+// ZERION — RepostController.js
+// Controller para rotas de repost.
+// ================================================
+
 const RepostServiceInstance = require('../service/RepostService');
 const NotificacaoServiceR   = require('../service/NotificacaoService');
 
+// Classe que gerencia repost controller
+
 class RepostController {
+
+    // Executa a ação de repostar
 
     async repostar(req, res) {
         try {
@@ -19,6 +28,8 @@ class RepostController {
             res.status(500).json({ msg: 'Erro ao repostar' });
         }
     }
+
+    // Executa a ação de desfazer
 
     async desfazer(req, res) {
         try {

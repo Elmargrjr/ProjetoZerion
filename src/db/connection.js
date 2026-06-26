@@ -1,3 +1,8 @@
+// ================================================
+// ZERION — connection.js
+// Configuração de conexão MySQL usando variáveis de ambiente.
+// ================================================
+
 require("dotenv").config();
 
 const mysql = require('mysql2');

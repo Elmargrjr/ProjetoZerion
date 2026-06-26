@@ -1,3 +1,10 @@
+// ================================================
+// ZERION — server.js
+// Servidor Express que expõe a API e serve arquivos estáticos.
+// ================================================
+
+require('dotenv').config();
+
 const express = require('express');
 const cors    = require('cors');
 

@@ -2,6 +2,8 @@
 
 const db = require('../../db/connection');
 
+// Classe que gerencia notificacao repository
+
 class NotificacaoRepository {
 
     criar(usuario_id, ator_id, tipo, post_id = null) {

@@ -1,4 +1,11 @@
+// ================================================
+// ZERION — UsuarioRepository.js
+// Repositório de banco de dados para usuario.
+// ================================================
+
 const db = require('../../db/connection');
+
+// Classe que gerencia usuario repository
 
 class UsuarioRepository {
 

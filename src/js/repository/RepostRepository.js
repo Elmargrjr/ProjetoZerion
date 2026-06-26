@@ -3,6 +3,8 @@
 // ================================================
 const db = require('../../db/connection');
 
+// Classe que gerencia repost repository
+
 class RepostRepository {
 
     repostar(post_id, usuario_id) {

@@ -1,7 +1,16 @@
+// ================================================
+// ZERION — LikeController.js
+// Controller para rotas de like.
+// ================================================
+
 const LikeServiceInstance      = require('../service/LikeService');
 const NotificacaoService       = require('../service/NotificacaoService');
 
+// Classe que gerencia like controller
+
 class LikeController {
+
+    // Executa a ação de curtir
 
     async curtir(req, res) {
         try {
@@ -20,6 +29,22 @@ class LikeController {
         }
     }
 
+    // Executa a ação de listar por usuario
+
+    async listarPorUsuario(req, res) {
+    try {
+        const { id }      = req.params;
+        const viewer_id   = req.query.viewer_id || 0;
+        const posts       = await LikeServiceInstance.listarPorUsuario(id, viewer_id);
+        res.json(posts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Erro ao listar curtidas' });
+    }
+}
+
+    // Executa a ação de descurtir
+
     async descurtir(req, res) {
         try {
             const { post_id, usuario_id } = req.body;
@@ -36,6 +61,8 @@ class LikeController {
             res.status(500).json({ msg: 'Erro ao descurtir' });
         }
     }
+
+    // Executa a ação de contar
 
     async contar(req, res) {
         try {

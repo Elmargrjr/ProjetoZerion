@@ -1,4 +1,46 @@
-const db = require('../../db/connection');
+// src/js/repository/MensagemRepository.js
+
+const db     = require('../../db/connection');
+const crypto = require('crypto');
+
+// ================================================
+// CRIPTOGRAFIA AES-256-CBC
+// Chave de 32 bytes lida do .env
+// Adicione no .env: MSG_SECRET=zerion_mensagens_chave_secreta_32b
+// ================================================
+
+const ALGORITMO = 'aes-256-cbc';
+const CHAVE     = crypto.scryptSync(
+    process.env.MSG_SECRET || 'zerion_chave_padrao_32_bytes_aqui',
+    'zerion_salt',
+    32
+);
+// Função para criptografar
+
+function criptografar(texto) {
+    const iv         = crypto.randomBytes(16);
+    const cipher     = crypto.createCipheriv(ALGORITMO, CHAVE, iv);
+    const criptograf = Buffer.concat([cipher.update(texto, 'utf8'), cipher.final()]);
+    // Salva iv + conteúdo em base64 separados por ":"
+    return iv.toString('hex') + ':' + criptograf.toString('hex');
+}
+// Função para descriptografar
+
+function descriptografar(textoEncriptado) {
+    try {
+        const [ivHex, conteudoHex] = textoEncriptado.split(':');
+        const iv       = Buffer.from(ivHex, 'hex');
+        const conteudo = Buffer.from(conteudoHex, 'hex');
+        const decipher = crypto.createDecipheriv(ALGORITMO, CHAVE, iv);
+        return Buffer.concat([decipher.update(conteudo), decipher.final()]).toString('utf8');
+    } catch {
+        // Se falhar na descriptografia retorna o texto original
+        // (compatibilidade com mensagens antigas não criptografadas)
+        return textoEncriptado;
+    }
+}
+
+// Classe que gerencia mensagem repository
 
 class MensagemRepository {
 
@@ -7,7 +49,9 @@ class MensagemRepository {
         return db.promise().query(sql, [remetente_id, destinatario_id, conteudo]);
     }
 
-    buscarConversa(usuario1_id, usuario2_id) {
+    // Executa a ação de buscar conversa
+
+    async buscarConversa(usuario1_id, usuario2_id) {
         const sql = `
             SELECT mensagens.*, usuarios.username AS remetente_username
             FROM mensagens
@@ -19,7 +63,9 @@ class MensagemRepository {
         return db.promise().query(sql, [usuario1_id, usuario2_id, usuario2_id, usuario1_id]);
     }
 
-    listarConversas(usuario_id) {
+    // Executa a ação de listar conversas
+
+    async listarConversas(usuario_id) {
         const sql = `
             SELECT
                 u.id,

@@ -7,7 +7,9 @@ let destinatarioAtivo = null;
 
 // Elementos — acessados após DOMContentLoaded
 let elListaConversas, elTelaChat, elChatMensagens,
-    elInputMensagem, elBtnEnviar, elBtnVoltar, elChatNome, elChatAvatar;
+    elInputMensagem, elBtnEnviar, elBtnVoltar, elChatNome, elChatAvatar,
+    elHeaderMensagens;
+let intervaloAtualizacao = null;
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -118,6 +120,7 @@ async function abrirChat(id, username, fotoPerfil) {
     }
 
     await carregarMensagens();
+    iniciarAtualizacaoChat();
     elInputMensagem.focus();
 }
 
@@ -152,7 +155,7 @@ async function enviarMensagem() {
     if (texto === "" || !destinatarioAtivo || !usuarioLogado) return;
 
     try {
-        await fetch("http://localhost:3000/mensagens", {
+        const resposta = await fetch("http://localhost:3000/mensagens", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -162,9 +165,14 @@ async function enviarMensagem() {
             })
         });
 
+        if (!resposta.ok) {
+            throw new Error('Falha ao enviar mensagem');
+        }
+
         adicionarMensagemNaTela(texto, "enviada");
         elInputMensagem.value = "";
         elInputMensagem.focus();
+        carregarConversas();
 
     } catch (erro) {
         console.error("Erro ao enviar:", erro);
@@ -174,6 +182,7 @@ async function enviarMensagem() {
 // ================================================
 // RENDERIZAR MENSAGEM
 // ================================================
+// Função para adicionar mensagem na tela
 
 function adicionarMensagemNaTela(texto, tipo) {
     const item = document.createElement("li");
@@ -186,9 +195,18 @@ function adicionarMensagemNaTela(texto, tipo) {
 // ================================================
 // VOLTAR
 // ================================================
+// Função para voltar lista
 
 function voltarLista() {
-    destinatarioAtivo              = null;
+    destinatarioAtivo = null;
+    pararAtualizacaoChat();
+
+    // Mostra o header mobile ao sair do chat
+    if (elHeaderMensagens && window.innerWidth < 1024) {
+    elHeaderMensagens.style.display = "flex";
+    }
+    elTelaChat.style.top = "55px";
+
     elTelaChat.style.display       = "none";
     elListaConversas.style.display = "block";
     history.replaceState(null, "", "mensagens.html");
@@ -198,6 +216,7 @@ function voltarLista() {
 // ================================================
 // FORMATAR TEMPO
 // ================================================
+// Função para formatar tempo
 
 function formatarTempo(data) {
     const diff = Math.floor((new Date() - new Date(data)) / 60000);
@@ -206,3 +225,20 @@ function formatarTempo(data) {
     if (diff < 1440) return `${Math.floor(diff / 60)}h`;
     return `${Math.floor(diff / 1440)}d`;
 }
+
+function iniciarAtualizacaoChat() {
+    pararAtualizacaoChat();
+    intervaloAtualizacao = setInterval(async () => {
+        if (destinatarioAtivo) await carregarMensagens();
+        carregarConversas();
+    }, 5000);
+}
+
+function pararAtualizacaoChat() {
+    if (intervaloAtualizacao) {
+        clearInterval(intervaloAtualizacao);
+        intervaloAtualizacao = null;
+    }
+}
+
+window.addEventListener("beforeunload", pararAtualizacaoChat);

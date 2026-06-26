@@ -7,6 +7,7 @@ const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
 // ================================================
 // TIMESTAMP RELATIVO
 // ================================================
+// Função para tempo relativo
 
 function tempoRelativo(dataStr) {
     const agora = new Date();
@@ -24,6 +25,7 @@ function tempoRelativo(dataStr) {
 // ================================================
 // TEXTO E ÍCONE POR TIPO
 // ================================================
+// Função para info notificacao
 
 function infoNotificacao(tipo, atorUsername) {
     const nome = atorUsername.startsWith("@") ? atorUsername : `@${atorUsername}`;
@@ -141,6 +143,7 @@ async function carregarNotificacoes() {
         console.error("Erro ao carregar notificações:", erro);
     }
 }
+// Função para tipo texto
 
 function tipoTexto(tipo) {
     switch (tipo) {
@@ -155,6 +158,7 @@ function tipoTexto(tipo) {
 // ================================================
 // BADGE DE NÃO LIDAS — atualiza o ícone do sino
 // ================================================
+// Função para atualizar badge
 
 function atualizarBadge(total) {
     // Feed e outras páginas que têm o ícone de sino

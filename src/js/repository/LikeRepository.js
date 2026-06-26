@@ -3,6 +3,8 @@
 // ================================================
 const db = require('../../db/connection');
 
+// Classe que gerencia like repository
+
 class LikeRepository {
 
     curtir(post_id, usuario_id) {

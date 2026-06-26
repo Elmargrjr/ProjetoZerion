@@ -1,7 +1,16 @@
+// ================================================
+// ZERION — SeguidorController.js
+// Controller para rotas de seguidor.
+// ================================================
+
 const SeguidorServiceInstance = require('../service/SeguidorService');
 const NotificacaoServiceS     = require('../service/NotificacaoService');
 
+// Classe que gerencia seguidor controller
+
 class SeguidorController {
+
+    // Executa a ação de seguir
 
     async seguir(req, res) {
         try {
@@ -18,6 +27,34 @@ class SeguidorController {
         }
     }
 
+    // Executa a ação de listar seguidores
+
+    async listarSeguidores(req, res) {
+    try {
+        const { id }      = req.params;
+        const seguidores  = await SeguidorServiceInstance.listarSeguidores(id);
+        res.json(seguidores);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Erro ao listar seguidores' });
+    }
+}
+ 
+// Executa a ação de listar seguindo
+ 
+async listarSeguindo(req, res) {
+    try {
+        const { id }    = req.params;
+        const seguindo  = await SeguidorServiceInstance.listarSeguindo(id);
+        res.json(seguindo);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Erro ao listar seguindo' });
+    }
+}
+
+    // Executa a ação de desseguir
+
     async desseguir(req, res) {
         try {
             const { seguidor_id, seguindo_id } = req.body;
@@ -33,6 +70,8 @@ class SeguidorController {
         }
     }
 
+    // Executa a ação de contar
+
     async contar(req, res) {
         try {
             const { id } = req.params;
@@ -43,6 +82,8 @@ class SeguidorController {
             res.status(500).json({ msg: 'Erro ao contar seguidores' });
         }
     }
+
+    // Executa a ação de checar
 
     async checar(req, res) {
         try {

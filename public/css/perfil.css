@@ -347,23 +347,56 @@ main { width: 100%; min-height: 100vh; display: flex; flex-direction: column; }
     font-size: 0.8rem; flex-shrink: 0; margin: 0; padding: 0; transition: all 0.2s;
 }
 
-.btn-enviar-comentario:hover { background-color: var(--neon-ciano); color: rgb(5,13,26); transform: translateY(-1px); }
-
-.lista-comentarios { list-style: none; display: flex; flex-direction: column; gap: 10px; max-height: 240px; overflow-y: auto; scrollbar-width: none; }
-.lista-comentarios::-webkit-scrollbar { display: none; }
-.comentario-item { display: flex; align-items: flex-start; gap: 8px; }
-
-.comentario-avatar-mini {
-    width: 28px; height: 28px; border-radius: 50%;
-    background-color: rgba(55,82,166,0.5); flex-shrink: 0;
-    background-size: cover; background-position: center;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.75rem; color: rgba(255,255,255,0.3);
+.icone-btn:hover i,
+.icone-btn:hover svg,
+.icone-btn:hover span {
+    color: white;
+    fill: white;
 }
 
-.comentario-corpo { background-color: rgba(255,255,255,0.04); border-radius: 10px; padding: 6px 10px; flex: 1; }
-.comentario-usuario { display: block; color: var(--neon-ciano); font-size: 0.72rem; margin-bottom: 3px; }
-.comentario-texto { color: rgba(255,255,255,0.85); font-size: 0.8rem; line-height: 1.4; word-break: break-word; }
+.btn-like.curtido i,
+.btn-like.curtido svg,
+.btn-like.curtido span {
+    color: #fa709a;
+    fill: #fa709a;
+    text-shadow: 0 0 8px rgba(250, 112, 154, 0.6);
+}
+
+.btn-repost.repostado i,
+.btn-repost.repostado svg,
+.btn-repost.repostado span {
+    color: var(--neon-ciano);
+    fill: var(--neon-ciano);
+    text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+}
+
+.btn-comentar.comentario-ativo i,
+.btn-comentar.comentario-ativo svg,
+.btn-comentar.comentario-ativo span {
+    color: var(--neon-ciano);
+}
+
+
+.repost-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--txt-poeira);
+    font-size: 0.72rem;
+    margin-bottom: 12px;
+    margin-left: 8px;
+}
+
+.repost-label i {
+    font-size: 0.85rem;
+    color: var(--neon-ciano);
+}
+
+.secao-comentarios {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
 
 .comentario-input-area {
     max-width: 100%;

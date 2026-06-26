@@ -609,19 +609,25 @@ nav#navegacao a.ativo {
 }
 
 .icone-btn:hover i,
+.icone-btn:hover svg,
 .icone-btn:hover span {
     color: white;
+    fill: white;
 }
 
 .btn-like.curtido i,
+.btn-like.curtido svg,
 .btn-like.curtido span {
     color: #fa709a;
+    fill: #fa709a;
     text-shadow: 0 0 8px rgba(250, 112, 154, 0.6);
 }
 
 .btn-repost.repostado i,
+.btn-repost.repostado svg,
 .btn-repost.repostado span {
     color: var(--neon-ciano);
+    fill: var(--neon-ciano);
     text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
 }
 

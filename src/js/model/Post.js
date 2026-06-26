@@ -1,3 +1,10 @@
+// ================================================
+// ZERION — Post.js
+// Modelo de dados para post.
+// ================================================
+
+// Classe que gerencia post
+
 class Post {
     constructor(id, usuario_id, conteudo, imagem) {
         this.id = id;

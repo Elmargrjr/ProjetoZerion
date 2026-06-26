@@ -41,9 +41,10 @@
     font-size: 0.8rem;
 }
 
-/* --- Botão de repost ativo --- */
-.btn-repost.repostado i { color: var(--neon-ciano); }
-.btn-comentar.comentario-ativo i { color: var(--neon-ciano); }
+.btn-repost.repostado i,
+.btn-repost.repostado svg { color: var(--neon-ciano); fill: var(--neon-ciano); }
+.btn-comentar.comentario-ativo i,
+.btn-comentar.comentario-ativo svg { color: var(--neon-ciano); fill: var(--neon-ciano); }
 
 /* --- Seção de comentários --- */
 .secao-comentarios {
